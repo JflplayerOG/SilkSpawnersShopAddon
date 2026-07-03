@@ -89,6 +89,7 @@
     </dependency>
   </dependencies>
 
+  <!-- SCM (kept as in original) -->
   <scm>
     <url>https://github.com/timbru31/SilkSpawnersShopAddon</url>
     <connection>scm:git:git://github.com/timbru31/SilkSpawnersShopAddon.git</connection>
@@ -115,7 +116,7 @@
         </configuration>
       </plugin>
 
-      <!-- Shade: build a shaded jar containing MongoDB driver and Gson -->
+      <!-- Shade: create an attached shaded jar (avoid replacing original artifact) -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
@@ -128,13 +129,16 @@
             </goals>
             <configuration>
               <createDependencyReducedPom>true</createDependencyReducedPom>
-              <finalName>${project.artifactId}-${project.version}-shaded</finalName>
+              <shadedArtifactAttached>true</shadedArtifactAttached>
+              <shadedClassifierName>shaded</shadedClassifierName>
+
               <artifactSet>
                 <includes>
                   <include>org.mongodb:mongodb-driver-sync</include>
                   <include>com.google.code.gson:gson</include>
                 </includes>
               </artifactSet>
+
               <!-- Exclude runtime-provided plugin dependencies -->
               <filters>
                 <filter>
